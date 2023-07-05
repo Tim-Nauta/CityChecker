@@ -1,0 +1,118 @@
+/* 0 default settings */
+/* 0.1 full reset */
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+/* 0.2 setting rem value */
+html {
+  font-size: 62.5%;
+  font-family: "Open Sans", sans-serif;
+}
+
+/* 1 generic styling */
+
+.hide {
+  display: none;
+}
+
+.flex {
+  display: flex;
+}
+
+.grid {
+  display: grid;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+}
+
+.weather-app-background {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  background-image: url("/images/utrecht.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* background-color: rgb(103, 186, 224); */
+}
+
+.weather-app-overlay {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(0, 0, 0, 0.4);
+}
+
+.weather-app-container {
+  width: 60rem;
+  height: 60rem;
+  background: linear-gradient(
+    0turn,
+    rgba(150, 143, 143, 0.7),
+    rgba(218, 215, 215, 0.7)
+  );
+  /* background-color: rgba(196, 186, 186, 0.7); */
+  box-shadow: 0 13px 21px rgba(0, 0, 0, 0.05);
+  /* background: linear-gradient(135deg, #3f76dd, #824bdb); */
+  /* box-shadow: 10px 10px 30px 0px rgba(0, 0, 0, 0.2); */
+  border-radius: 7.5rem;
+
+  /* position the block in the center of the screen */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* city input */
+
+#city-input {
+  width: 35rem;
+  height: 6rem;
+  padding: 1rem 5rem;
+  border: none;
+  font-size: 2rem;
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 5rem;
+  background-color: white;
+}
+
+#city-input:focus {
+  outline: none;
+}
+
+.city-submit-styling {
+  width: 6rem;
+  height: 6rem;
+  padding: 0.7rem;
+  margin-left: 1rem;
+  border: none;
+  font-size: 1.5rem;
+  border-radius: 100%;
+  background-color: white;
+}
+
+/* show temperature */
+
+.temperature {
+  font-size: 3.5rem;
+  color: white;
+}
+
+.temperature-text-styling {
+  font-size: 7rem;
+  color: white;
+}
+
+/* show city */
+
+.city {
+  font-size: 5rem;
+  color: white;
+}

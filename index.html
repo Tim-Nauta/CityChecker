@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="weather-app-background">
+      <div class="weather-app-overlay">
+        <div class="weather-app-container grid">
+          <!-- city input  -->
+          <div class="city-input-container flex-center">
+            <form class="flex">
+              <input
+                type="text"
+                placeholder="In which city do you live?"
+                id="city-input"
+                required
+              />
+              <label>
+                <input class="city-submit hide" type="submit" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="grey"
+                  class="w-6 h-6 city-submit-styling"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
+                  />
+                </svg>
+              </label>
+            </form>
+          </div>
+
+          <!-- show temperature  -->
+          <div class="temperature-container flex-center">
+            <p class="temperature">
+              <span class="temperature-text temperature-text-styling">22</span
+              >°C
+            </p>
+          </div>
+
+          <!-- show city  -->
+          <div class="show-city-container flex-center">
+            <p class="city">Utrecht</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="script.js"></script>
+  </body>
+</html>
