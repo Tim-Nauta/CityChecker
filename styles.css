@@ -46,16 +46,16 @@ html {
 .weather-app-overlay {
   width: 100vw;
   height: 100vh;
-  background-color: rgb(0, 0, 0, 0.4);
+  background-color: rgb(0, 0, 0, 0.5);
 }
 
 .weather-app-container {
-  width: 60rem;
+  width: 110rem;
   height: 60rem;
   background: linear-gradient(
     0turn,
-    rgba(150, 143, 143, 0.7),
-    rgba(218, 215, 215, 0.7)
+    rgba(138, 130, 130, 0.75),
+    rgba(202, 198, 198, 0.75)
   );
   /* background-color: rgba(196, 186, 186, 0.7); */
   box-shadow: 0 13px 21px rgba(0, 0, 0, 0.05);
@@ -71,6 +71,9 @@ html {
 }
 
 /* city input */
+.city-input-container {
+  margin-top: 3rem;
+}
 
 #city-input {
   width: 35rem;
@@ -100,6 +103,13 @@ html {
 
 /* show temperature */
 
+.temperature-container {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 4;
+}
+
 .temperature {
   font-size: 3.5rem;
   color: white;
@@ -111,8 +121,40 @@ html {
 }
 
 /* show city */
-
 .city {
   font-size: 5rem;
+  color: white;
+}
+
+/* costs overview */
+
+.costs-overview {
+  padding: 5rem 5rem;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 1rem;
+}
+
+/* cost blocks styling */
+.costs-overview-block {
+  min-height: 10rem;
+  /* background-color: grey; */
+  justify-items: center;
+  padding: 1rem;
+}
+
+.costs-icon-styling {
+  height: 4rem;
+  width: 4rem;
+  fill: white;
+}
+
+.costs-text {
+  font-size: 1.5rem;
+  color: white;
+  text-align: center;
+}
+
+.costs-number {
+  font-size: 2.2rem;
   color: white;
 }

@@ -17,6 +17,11 @@ const showTemperature = document.querySelector(".temperature-text");
 /* application background */
 const appBackground = document.querySelector(".weather-app-background");
 
+/* 1.3 living costs */
+let dataCityAndCountry = "";
+let cityArrayResult = "";
+let submittedCountry = "";
+
 /* 2. openWeather API */
 /* request the weather data via the openweather API */
 async function requestWeather() {
@@ -48,7 +53,7 @@ const convertTemperature = function (temperatureKelvin) {
 /* produce an image for the requested city */
 async function requestCityImage() {
   /* replace all spaces and change the input to lowercase */
-  let teleportApiUrl = `https://api.teleport.org/api/urban_areas/slug:${cityInput.value
+  const teleportApiUrl = `https://api.teleport.org/api/urban_areas/slug:${cityInput.value
     .replaceAll(" ", "-")
     .toLowerCase()}/images/`;
 
@@ -88,10 +93,9 @@ async function requestCityImage() {
 // }
 
 // requestCostOfLiving();
-
-const url =
-  "https://cost-of-living-and-prices.p.rapidapi.com/prices?city_name=Bratislava&country_name=Slovakia";
-const options = {
+/* request country and city list to search for the corresponding country based on the submitted city */
+const urlCountries = "https://cost-of-living-and-prices.p.rapidapi.com/cities";
+const optionsCountries = {
   method: "GET",
   headers: {
     "X-RapidAPI-Key": "1e57bfef2amsh9231ede2da10ba7p180c79jsn8010f9c78bef",
@@ -99,13 +103,31 @@ const options = {
   },
 };
 
-// async function requestCostOfLiving() {
-//   const response = await fetch(url, options);
-//   const result = await response.text();
-//   console.log(result);
-// }
+async function requestCityAndCountry() {
+  const response = await fetch(urlCountries, optionsCountries);
+  dataCityAndCountry = await response.json();
+  console.log(dataCityAndCountry);
+}
 
+requestCityAndCountry();
+
+/* function to find country based on city */
+function findCityArray(city) {
+  /* search for the city that was input by the user */
+  return city.city_name === `${cityInput.value}`;
+}
+
+/* request costs */
 async function requestCostOfLiving() {
+  const url = `https://cost-of-living-and-prices.p.rapidapi.com/prices?city_name=${cityInput.value}&country_name=${submittedCountry}`;
+  const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": "1e57bfef2amsh9231ede2da10ba7p180c79jsn8010f9c78bef",
+      "X-RapidAPI-Host": "cost-of-living-and-prices.p.rapidapi.com",
+    },
+  };
+
   const response = await fetch(url, options);
   const data = await response.json();
   console.log(data);
@@ -138,19 +160,29 @@ async function requestCostOfLiving() {
   );
 }
 
-requestCostOfLiving();
-
 /* 5. Handle the form input */
 /* submit the city name that was filled in by the user */
 citySubmit.addEventListener("click", function (event) {
   /* disable form auto submit */
   event.preventDefault();
 
+  /* search for the array that corresponds with the submitted city. this array needs to be found so the country that belongs to the submitted city can be stored and used to call the cost of living and prices api */
+  cityArrayResult = dataCityAndCountry.cities.find(findCityArray);
+  console.log(cityArrayResult);
+
+  submittedCountry = cityArrayResult.country_name;
+  console.log(submittedCountry);
+
   /* call the function that handles the openweather API */
   requestWeather();
 
   /* call the function that handles the teleport API to generate a city image */
   requestCityImage();
+
+  /* call the function that handles the cost of living and prices API*/
+  requestCostOfLiving();
+  console.log(submittedCountry);
+  console.log(cityInput.value);
 });
 
 /* plan of action */
