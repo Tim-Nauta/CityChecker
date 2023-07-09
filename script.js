@@ -7,7 +7,7 @@ const citySubmit = document.querySelector(".city-submit");
 let capitalizedCityInput = "";
 
 /* display the costs*/
-const taxiPrices = document.querySelector(".fastfood-costs-number");
+const taxiPrices = document.querySelector(".taxi-costs-number");
 const publicTransportPrices = document.querySelector(
   ".public-transport-costs-number"
 );
@@ -38,6 +38,9 @@ const appBackground = document.querySelector(".weather-app-background");
 let dataCityAndCountry = "";
 let cityArrayResult = "";
 let submittedCountry = "";
+
+/* 1.4 currency exchange USD to EUR */
+let usdToEurExchangeRate = "";
 
 /* 2. openWeather API */
 /* request the weather data via the openweather API */
@@ -110,7 +113,7 @@ async function requestCityImage() {
 // }
 
 // requestCostOfLiving();
-/* request country and city list to search for the corresponding country based on the submitted city */
+/* 4.1 request country and city list to search for the corresponding country based on the submitted city */
 const urlCountries = "https://cost-of-living-and-prices.p.rapidapi.com/cities";
 const optionsCountries = {
   method: "GET",
@@ -134,7 +137,7 @@ function findCityArray(city) {
   return city.city_name === `${capitalizedCityInput}`;
 }
 
-/* request costs */
+/* 4.2 request costs */
 async function requestCostOfLiving() {
   const url = `https://cost-of-living-and-prices.p.rapidapi.com/prices?city_name=${capitalizedCityInput}&country_name=${submittedCountry}`;
   const options = {
@@ -150,41 +153,98 @@ async function requestCostOfLiving() {
   console.log(data);
   console.log(data.prices);
 
-  /* food */
-  /* prices for fastfood */
-  fastfoodPrices.innerHTML = data.prices[33].usd.avg;
+  /* 4.3 display requested data */
+  /* 4.3.1 food */
+  /* 4.3.1.1 prices for fastfood */
+  /* convert USD to EUR prices*/
+  const priceEurFastfood = usdToEurExchangeRate * data.prices[33].usd.avg;
+
+  /* round amount to 2 decimals */
+  fastfoodPrices.innerHTML = `€ ${priceEurFastfood.toFixed(2)}`;
+
   console.log(
     `the average price for a fastfood meal is ${data.prices[33].usd.avg}`
   );
-  /* prices for mid-range restaurant */
-  midRangeRestaurantPrices.innerHTML = data.prices[34].usd.avg;
+  /* 4.3.1.2 prices for mid-range restaurant */
+  /* convert USD to EUR prices*/
+  const priceEurMidRangeRestaurant =
+    usdToEurExchangeRate * data.prices[34].usd.avg;
+
+  /* round amount to 2 decimals */
+  midRangeRestaurantPrices.innerHTML = `€ ${priceEurMidRangeRestaurant.toFixed(
+    2
+  )}`;
+
   console.log(
     `the average price for a mid-range restaurant is ${data.prices[34].usd.avg}`
   );
-  /* prices for cheap restaurant */
-  inexpensiveRestaurantPrices.innerHTML = data.prices[35].usd.avg;
+  /* 4.3.1.3 prices for cheap restaurant */
+  /* convert USD to EUR prices*/
+  const priceEurInexpensiveRestaurant =
+    usdToEurExchangeRate * data.prices[35].usd.avg;
+
+  /* round amount to 2 decimals */
+  inexpensiveRestaurantPrices.innerHTML = `€ ${priceEurInexpensiveRestaurant.toFixed(
+    2
+  )}`;
+
   console.log(
     `the average price for an inexpensive restaurant is ${data.prices[35].usd.avg}`
   );
 
-  /* transport */
-  /* prices for public transport */
-  publicTransportPrices.innerHTML = data.prices[42].usd.avg;
+  /* 4.3.2 transport */
+  /* 4.3.2.1 prices for public transport */
+  /* convert USD to EUR prices*/
+  const priceEurPublicTransport =
+    usdToEurExchangeRate * data.prices[42].usd.avg;
+
+  /* round amount to 2 decimals */
+  publicTransportPrices.innerHTML = `€ ${priceEurPublicTransport.toFixed(2)}`;
+
   console.log(
     `the average price for a one-way local transport ticket is ${data.prices[42].usd.avg}`
   );
-  /* prices for 1km taxi */
-  taxiPrices.innerHTML = data.prices[34].usd.avg;
-  console.log(`the average price for 1km taxi is ${data.prices[34].usd.avg}`);
 
-  /* prices for 1 liter gasoline */
-  gasolinePrices.innerHTML = data.prices[44].usd.avg;
+  /* 4.3.2.2 prices for 1km taxi */
+  /* convert USD to EUR prices*/
+  const priceEurTaxi = usdToEurExchangeRate * data.prices[49].usd.avg;
+
+  /* round amount to 2 decimals */
+  taxiPrices.innerHTML = `€ ${priceEurTaxi.toFixed(2)}`;
+  console.log(`the average price for 1km taxi is ${data.prices[49].usd.avg}`);
+
+  /* 4.3.2.3 prices for 1 liter gasoline */
+  /* convert USD to EUR prices*/
+  const priceEurGasoline = usdToEurExchangeRate * data.prices[44].usd.avg;
+
+  /* round amount to 2 decimals */
+  gasolinePrices.innerHTML = `€ ${priceEurGasoline.toFixed(2)}`;
+
   console.log(
     `the average price for 1 liter gasoline is ${data.prices[44].usd.avg}`
   );
 }
 
-/* 5. Handle the form input */
+/* 5. Currency conversion API */
+
+async function requestConvertCurrency() {
+  const url =
+    "https://currency-exchange.p.rapidapi.com/exchange?from=USD&to=EUR&q=1.0";
+  const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": "1e57bfef2amsh9231ede2da10ba7p180c79jsn8010f9c78bef",
+      "X-RapidAPI-Host": "currency-exchange.p.rapidapi.com",
+    },
+  };
+
+  const response = await fetch(url, options);
+  usdToEurExchangeRate = await response.json();
+}
+
+requestConvertCurrency();
+
+/* 6. Handle the form input */
 /* submit the city name that was filled in by the user */
 citySubmit.addEventListener("click", function (event) {
   /* disable form auto submit */
@@ -203,15 +263,11 @@ citySubmit.addEventListener("click", function (event) {
   /* join all the elements of the array back together into a string */
   capitalizedCityInput = cityInputArray.join(" ");
 
-  console.log(`the input is ${cityInputArray}`);
-  console.log(capitalizedCityInput);
-
   /* search for the array that corresponds with the submitted city. this array needs to be found so the country that belongs to the submitted city can be stored and used to call the cost of living and prices api */
   cityArrayResult = dataCityAndCountry.cities.find(findCityArray);
   console.log(cityArrayResult);
 
   submittedCountry = cityArrayResult.country_name;
-  console.log(submittedCountry);
 
   /* call the function that handles the openweather API */
   requestWeather();
@@ -222,17 +278,19 @@ citySubmit.addEventListener("click", function (event) {
   /* call the function that handles the cost of living and prices API*/
   requestCostOfLiving();
   console.log(submittedCountry);
-  console.log(cityInput.value);
 });
 
 /* plan of action */
 /* information tables to include in the app */
 /* 
 1. weather in coming week
-2. transportation costs 
-3. eating costs
-4. staying costs (apartment, hotel etc.)
+4. staying costs (apartment, AirBNB, hotel, buy apartment etc.)
 
 optional
 5. cost to get there (plane, car, train)
 */
+
+/* inexpensive restuaraunt 
+three course dinner */
+
+/* living expenses: apartment, renting utilities */
