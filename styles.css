@@ -14,16 +14,16 @@ html {
 
 /* 1 generic styling */
 
-.hide {
-  display: none;
-}
-
 .flex {
   display: flex;
 }
 
 .grid {
   display: grid;
+}
+
+.hide {
+  display: none;
 }
 
 .flex-center {
@@ -33,7 +33,16 @@ html {
   flex-wrap: wrap;
 }
 
-.weather-app-background {
+.center-absolute {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* main container */
+
+.main-app-background {
   width: 100vw;
   height: 100vh;
   position: relative;
@@ -43,13 +52,13 @@ html {
   /* background-color: rgb(103, 186, 224); */
 }
 
-.weather-app-overlay {
+.main-app-overlay {
   width: 100vw;
   height: 100vh;
   background-color: rgb(0, 0, 0, 0.5);
 }
 
-.weather-app-container {
+.main-app-container {
   width: 110rem;
   height: 60rem;
   background: linear-gradient(
@@ -149,12 +158,29 @@ html {
 }
 
 .costs-text {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
+  font-weight: 500;
   color: white;
   text-align: center;
 }
 
 .costs-number {
-  font-size: 2.2rem;
+  font-size: 2.5rem;
+  font-weight: 600;
   color: white;
+}
+
+/* intro container styling */
+.intro-heading {
+  font-size: 5rem;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+  padding-bottom: 3rem;
+}
+
+/* no display */
+
+.no-display {
+  background: none;
 }

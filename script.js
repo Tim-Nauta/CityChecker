@@ -6,7 +6,13 @@ const cityInput = document.getElementById("city-input");
 const citySubmit = document.querySelector(".city-submit");
 let capitalizedCityInput = "";
 
-/* display the costs*/
+/* container classes */
+/* these classes are used to transition to the main container */
+const mainContainer = document.querySelector(".main-app-container");
+const costOverview = document.querySelector(".costs-overview");
+const introHeading = document.querySelector(".intro-heading");
+
+/* elements that display the costs*/
 const taxiPrices = document.querySelector(".taxi-costs-number");
 const publicTransportPrices = document.querySelector(
   ".public-transport-costs-number"
@@ -20,7 +26,8 @@ const midRangeRestaurantPrices = document.querySelector(
   ".mid-range-restaurant-costs-number"
 );
 const apartmentPrices = document.querySelector(".apartment-costs-number");
-const hotelPrices = document.querySelector(".hotel-costs-number");
+const rentingPrices = document.querySelector(".renting-costs-number");
+const utilitiesPrices = document.querySelector(".utilities-costs-number");
 
 /* 1.1 open weather API*/
 /* open weather API key*/
@@ -32,7 +39,7 @@ const showTemperature = document.querySelector(".temperature-text");
 
 /* 1.2 teleport API */
 /* application background */
-const appBackground = document.querySelector(".weather-app-background");
+const appBackground = document.querySelector(".main-app-background");
 
 /* 1.3 living costs */
 let dataCityAndCountry = "";
@@ -41,6 +48,14 @@ let submittedCountry = "";
 
 /* 1.4 currency exchange USD to EUR */
 let usdToEurExchangeRate = "";
+
+/* transition to main container */
+/* if user is in the intro screen transition to the main container, otherwise stay in the current configuration */
+const transitionToMainContainer = function () {
+  mainContainer.classList.remove("no-display");
+  costOverview.classList.remove("hide");
+  introHeading.classList.add("hide");
+};
 
 /* 2. openWeather API */
 /* request the weather data via the openweather API */
@@ -223,6 +238,40 @@ async function requestCostOfLiving() {
   console.log(
     `the average price for 1 liter gasoline is ${data.prices[44].usd.avg}`
   );
+
+  /* 4.3.3 living expenses */
+  /* 4.3.3.1 prices for renting */
+  /* convert USD to EUR prices*/
+  const priceEurRenting = usdToEurExchangeRate * data.prices[26].usd.avg;
+
+  /* round amount to 2 decimals */
+  rentingPrices.innerHTML = `€ ${priceEurRenting.toFixed(2)}`;
+
+  console.log(
+    `the average price for renting an apartment is ${data.prices[26].usd.avg}`
+  );
+
+  /* 4.3.3.2 prices for apartment */
+  /* convert USD to EUR prices*/
+  const priceEurApartment = usdToEurExchangeRate * data.prices[1].usd.avg;
+
+  /* round amount to 2 decimals */
+  apartmentPrices.innerHTML = `€ ${priceEurApartment.toFixed(2)}`;
+
+  console.log(
+    `the average price for an apartment per m2 is ${data.prices[1].usd.avg}`
+  );
+
+  /* 4.3.3.3 prices for utilities */
+  /* convert USD to EUR prices*/
+  const priceEurUtilities = usdToEurExchangeRate * data.prices[48].avg;
+
+  /* round amount to 2 decimals */
+  utilitiesPrices.innerHTML = `€ ${priceEurUtilities.toFixed(2)}`;
+
+  console.log(
+    `the average price for basic utilities is ${data.prices[48].avg}`
+  );
 }
 
 /* 5. Currency conversion API */
@@ -249,6 +298,11 @@ requestConvertCurrency();
 citySubmit.addEventListener("click", function (event) {
   /* disable form auto submit */
   event.preventDefault();
+
+  console.log(cityInput);
+
+  /* if user is in the intro screen transition to the main container */
+  transitionToMainContainer();
 
   /* capitalize the first letter of the submitted city. captitalization is required for the API urls to receive a valid response */
   /* split all the seperate words into an array */
@@ -283,8 +337,7 @@ citySubmit.addEventListener("click", function (event) {
 /* plan of action */
 /* information tables to include in the app */
 /* 
-1. weather in coming week
-4. staying costs (apartment, AirBNB, hotel, buy apartment etc.)
+1. weather forecast for coming week
 
 optional
 5. cost to get there (plane, car, train)
