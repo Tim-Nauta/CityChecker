@@ -116,11 +116,13 @@ html {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 1;
-  grid-row-end: 4;
+  grid-row-end: 3;
 }
 
-.temperature {
-  font-size: 3.5rem;
+.temperature-celsius {
+  padding-top: 1.5rem;
+  padding-left: 0.5rem;
+  font-size: 2.5rem;
   color: white;
 }
 
@@ -129,9 +131,43 @@ html {
   color: white;
 }
 
+/* show weather forecast */
+.forecast-container {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 3;
+  grid-row-end: 4;
+}
+
+.forecast-block {
+  min-width: 25%;
+  flex-direction: column;
+}
+
+.forecast-celsius {
+  padding-top: 0.5rem;
+  padding-left: 0.3rem;
+  font-size: 1.2rem;
+  color: white;
+  font-weight: 400;
+}
+
+.forecast-date {
+  font-size: 1.5rem;
+  color: white;
+  font-weight: 400;
+  text-align: center;
+}
+
+.forecast-text-styling {
+  font-size: 3rem;
+  font-weight: 500;
+  color: white;
+}
+
 /* show city */
 .city {
-  font-size: 5rem;
+  font-size: 3rem;
   color: white;
 }
 

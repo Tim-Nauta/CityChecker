@@ -15,39 +15,6 @@
   <body>
     <div class="main-app-background">
       <div class="main-app-overlay">
-        <!-- start screen  -->
-        <!-- city input  -->
-        <!-- <div class="intro-container center-absolute">
-          <h1 class="intro-heading">Which city do you want to check?</h1>
-          <div class="city-input-container flex-center">
-            <form class="flex">
-              <input
-                type="text"
-                placeholder="Insert city name"
-                id="city-input2"
-                required
-              />
-              <label>
-                <input class="city-submit hide" type="submit" />
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="grey"
-                  class="w-6 h-6 city-submit-styling"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
-                  />
-                </svg>
-              </label>
-            </form>
-          </div>
-        </div> -->
-
         <div class="main-app-container grid no-display">
           <!-- city input  -->
           <div class="city-input-container flex-center">
@@ -80,18 +47,52 @@
           </div>
           <div class="grid costs-overview hide">
             <!-- show temperature  -->
-            <div class="temperature-container">
+            <div class="flex-center temperature-container">
               <div class="flex-center">
-                <p class="temperature">
-                  <span class="temperature-text temperature-text-styling"
-                    >22</span
-                  >°C
-                </p>
+                <p class="temperature-text temperature-text-styling">22</p>
+                <p class="temperature-celsius">°C</p>
               </div>
 
               <!-- show city  -->
               <div class="show-city-container flex-center">
                 <p class="city">Utrecht</p>
+              </div>
+            </div>
+
+            <!-- show weather forecast  -->
+            <div class="flex forecast-container">
+              <!-- weather forecast tomorrow -->
+              <div class="flex-center forecast-block">
+                <div class="flex">
+                  <p class="forecast-text-tomorrow forecast-text-styling">22</p>
+                  <p class="forecast-celsius">°C</p>
+                </div>
+                <p class="forecast-date-tomorrow forecast-date"></p>
+              </div>
+              <!-- weather forecast 2 days  -->
+              <div class="flex-center forecast-block">
+                <div class="flex">
+                  <p class="forecast-text-2days forecast-text-styling">22</p>
+                  <p class="forecast-celsius">°C</p>
+                </div>
+
+                <p class="forecast-date-2days forecast-date"></p>
+              </div>
+              <!-- weather forecast 3 days  -->
+              <div class="flex-center forecast-block">
+                <div class="flex">
+                  <p class="forecast-text-3days forecast-text-styling">22</p>
+                  <p class="forecast-celsius">°C</p>
+                </div>
+                <p class="forecast-date-3days forecast-date"></p>
+              </div>
+              <!-- weather forecast 4 days  -->
+              <div class="flex-center forecast-block">
+                <div class="flex">
+                  <p class="forecast-text-4days forecast-text-styling">22</p>
+                  <p class="forecast-celsius">°C</p>
+                </div>
+                <p class="forecast-date-4days forecast-date"></p>
               </div>
             </div>
 

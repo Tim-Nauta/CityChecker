@@ -12,6 +12,36 @@ const mainContainer = document.querySelector(".main-app-container");
 const costOverview = document.querySelector(".costs-overview");
 const introHeading = document.querySelector(".intro-heading");
 
+/* 1.1 open weather API*/
+/* open weather API key*/
+const openWeatherApiKey = "83f6d058a9249986fc56c3821fe9a562";
+const openWeatherApiKeyOld = "5ac0b29e5f43be93e21afe189ea88ade";
+
+/* display the requested weather data */
+const showCity = document.querySelector(".city");
+const showTemperature = document.querySelector(".temperature-text");
+
+/* display weather forecast */
+const forecastTomorrow = document.querySelector(".forecast-text-tomorrow");
+const forecast2Days = document.querySelector(".forecast-text-2days");
+const forecast3Days = document.querySelector(".forecast-text-3days");
+const forecast4Days = document.querySelector(".forecast-text-4days");
+
+/* display weather forecast date */
+const forecastTomorrowDate = document.querySelector(".forecast-date-tomorrow");
+const forecast2DaysDate = document.querySelector(".forecast-date-2days");
+const forecast3DaysDate = document.querySelector(".forecast-date-3days");
+const forecast4DaysDate = document.querySelector(".forecast-date-4days");
+
+/* 1.2 teleport API */
+/* application background */
+const appBackground = document.querySelector(".main-app-background");
+
+/* 1.3 living costs */
+let dataCityAndCountry = "";
+let cityArrayResult = "";
+let submittedCountry = "";
+
 /* elements that display the costs*/
 const taxiPrices = document.querySelector(".taxi-costs-number");
 const publicTransportPrices = document.querySelector(
@@ -29,35 +59,17 @@ const apartmentPrices = document.querySelector(".apartment-costs-number");
 const rentingPrices = document.querySelector(".renting-costs-number");
 const utilitiesPrices = document.querySelector(".utilities-costs-number");
 
-/* 1.1 open weather API*/
-/* open weather API key*/
-const openWeatherApiKey = "5ac0b29e5f43be93e21afe189ea88ade";
-
-/* display the requested weather data */
-const showCity = document.querySelector(".city");
-const showTemperature = document.querySelector(".temperature-text");
-
-/* 1.2 teleport API */
-/* application background */
-const appBackground = document.querySelector(".main-app-background");
-
-/* 1.3 living costs */
-let dataCityAndCountry = "";
-let cityArrayResult = "";
-let submittedCountry = "";
-
 /* 1.4 currency exchange USD to EUR */
 let usdToEurExchangeRate = "";
 
-/* transition to main container */
-/* if user is in the intro screen transition to the main container, otherwise stay in the current configuration */
-const transitionToMainContainer = function () {
-  mainContainer.classList.remove("no-display");
-  costOverview.classList.remove("hide");
-  introHeading.classList.add("hide");
+/* 2. openWeather API */
+
+/* convert Kelvin to Celsius */
+const convertTemperature = function (temperatureKelvin) {
+  const temperatureCelsius = Math.round(temperatureKelvin - 273.15);
+  return temperatureCelsius;
 };
 
-/* 2. openWeather API */
 /* request the weather data via the openweather API */
 async function requestWeather() {
   /* change the url by adding the open weather api key */
@@ -71,18 +83,97 @@ async function requestWeather() {
   /* change the displayed city name*/
   showCity.innerHTML = data.name;
 
-  /* convert temperature and round the number */
-  const temperature = convertTemperature(data.main.temp);
-
-  /* change the displayed temperature*/
-  showTemperature.innerHTML = temperature;
+  /* convert temperature and change the displayed temperature*/
+  showTemperature.innerHTML = convertTemperature(data.main.temp);
 }
 
-/* convert Kelvin to Celsius */
-const convertTemperature = function (temperatureKelvin) {
-  const temperatureCelsius = Math.round(temperatureKelvin - 273.15);
-  return temperatureCelsius;
-};
+// /* 2.1 openWeather Statistical Weather Data API */
+// async function requestStatisticalWeather2() {
+//   /* change the url by adding the open weather api key */
+//   const openWeatherStatisticalApiUrl = `history.openweathermap.org/data/2.5/aggregated/year?lat=${geolocationLat}&lon=${geolocationLon}&appid=${openWeatherApiKey}`;
+//   const response = await fetch(openWeatherStatisticalApiUrl);
+
+//   /* store the data as a json file */
+//   const data = await response.json();
+//   console.log(data);
+
+//   /* change the displayed city name*/
+//   // showCity.innerHTML = data.name;
+
+//   /* convert temperature and round the number */
+//   const temperature = convertTemperature(data.main.temp);
+
+//   /* change the displayed temperature*/
+//   // showTemperature.innerHTML = temperature;
+// }
+
+/* 2.1 openWeather Statistical Weather Data API */
+async function requestForecastWeather() {
+  /* urls to request the geocoding and open weather statisitcal API. the open weather forecast API requires the response from the geocoding API to function */
+  const openWeatherGeocodingApiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${capitalizedCityInput}&limit=${1}&appid=${openWeatherApiKey}`;
+
+  /* request geocoding data */
+  const responseGeocoding = await fetch(openWeatherGeocodingApiUrl);
+
+  /* store the geocoding data as a json file */
+  const dataGeocoding = await responseGeocoding.json();
+  console.log(dataGeocoding);
+
+  /* request open weather forecast data */
+  const openWeatherForecastApiUrl = `http://api.openweathermap.org/data/2.5/forecast?lat=${dataGeocoding[0].lat}&lon=${dataGeocoding[0].lon}&appid=${openWeatherApiKey}`;
+
+  const responseForecastWeather = await fetch(openWeatherForecastApiUrl);
+
+  /* store the forecast data as a json file */
+  const dataForecastWeather = await responseForecastWeather.json();
+  console.log(dataForecastWeather);
+
+  /* convert the temperature from Kelvin to Celsius and then display the forecast data in the weather forecast container */
+  forecastTomorrow.innerHTML = convertTemperature(
+    dataForecastWeather.list[8].main.temp
+  );
+  forecast2Days.innerHTML = convertTemperature(
+    dataForecastWeather.list[16].main.temp
+  );
+  forecast3Days.innerHTML = convertTemperature(
+    dataForecastWeather.list[24].main.temp
+  );
+  forecast4Days.innerHTML = convertTemperature(
+    dataForecastWeather.list[32].main.temp
+  );
+
+  /* remove the year and time from the forecast date strings. then swap the month and day so the date is forumalted in European style instead of American*/
+
+  // let dateTemp = "";
+
+  // const forecastTomorrowTrimmed = dataForecastWeather.list[8].dt_txt.substring(
+  //   6,
+  //   10
+  // );
+  // console.log(forecastTomorrowTrimmed);
+
+  /* display the date that corresponds with the forecast */
+  forecastTomorrowDate.innerHTML = dataForecastWeather.list[8].dt_txt.substring(
+    6,
+    10
+  );
+  forecast2DaysDate.innerHTML = dataForecastWeather.list[16].dt_txt.substring(
+    6,
+    10
+  );
+  forecast3DaysDate.innerHTML = dataForecastWeather.list[24].dt_txt.substring(
+    6,
+    10
+  );
+  forecast4DaysDate.innerHTML = dataForecastWeather.list[32].dt_txt.substring(
+    6,
+    10
+  );
+}
+
+/* 
+2023-07-12 00:00:00
+*/
 
 /* 3. Teleport API */
 /* produce an image for the requested city */
@@ -293,13 +384,19 @@ async function requestConvertCurrency() {
 
 requestConvertCurrency();
 
-/* 6. Handle the form input */
+/* 6. transition to main container */
+/* if user is in the intro screen transition to the main container, otherwise stay in the current configuration */
+const transitionToMainContainer = function () {
+  mainContainer.classList.remove("no-display");
+  costOverview.classList.remove("hide");
+  introHeading.classList.add("hide");
+};
+
+/* 7. Handle the form input */
 /* submit the city name that was filled in by the user */
 citySubmit.addEventListener("click", function (event) {
   /* disable form auto submit */
   event.preventDefault();
-
-  console.log(cityInput);
 
   /* if user is in the intro screen transition to the main container */
   transitionToMainContainer();
@@ -325,6 +422,8 @@ citySubmit.addEventListener("click", function (event) {
 
   /* call the function that handles the openweather API */
   requestWeather();
+
+  requestForecastWeather();
 
   /* call the function that handles the teleport API to generate a city image */
   requestCityImage();
