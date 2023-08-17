@@ -11,6 +11,8 @@ let capitalizedCityInput = "";
 const mainContainer = document.querySelector(".main-app-container");
 const costOverview = document.querySelector(".costs-overview");
 const introHeading = document.querySelector(".intro-heading");
+const mainAppBackground = document.querySelector(".main-app-background");
+const mainAppOverlay = document.querySelector(".main-app-overlay");
 
 /* 1.1 open weather API*/
 /* open weather API key*/
@@ -141,39 +143,36 @@ async function requestForecastWeather() {
   forecast4Days.innerHTML = convertTemperature(
     dataForecastWeather.list[32].main.temp
   );
-
-  /* remove the year and time from the forecast date strings. then swap the month and day so the date is forumalted in European style instead of American*/
-
-  // let dateTemp = "";
-
-  // const forecastTomorrowTrimmed = dataForecastWeather.list[8].dt_txt.substring(
-  //   6,
-  //   10
-  // );
-  // console.log(forecastTomorrowTrimmed);
-
-  /* display the date that corresponds with the forecast */
-  forecastTomorrowDate.innerHTML = dataForecastWeather.list[8].dt_txt.substring(
-    6,
-    10
-  );
-  forecast2DaysDate.innerHTML = dataForecastWeather.list[16].dt_txt.substring(
-    6,
-    10
-  );
-  forecast3DaysDate.innerHTML = dataForecastWeather.list[24].dt_txt.substring(
-    6,
-    10
-  );
-  forecast4DaysDate.innerHTML = dataForecastWeather.list[32].dt_txt.substring(
-    6,
-    10
-  );
 }
 
-/* 
-2023-07-12 00:00:00
-*/
+/* set the days for the weather forecast */
+const today = new Date();
+const tomorrow = new Date(today);
+const twoDays = new Date(today);
+const threeDays = new Date(today);
+const fourDays = new Date(today);
+
+tomorrow.setDate(today.getDate() + 1);
+twoDays.setDate(today.getDate() + 2);
+threeDays.setDate(today.getDate() + 3);
+fourDays.setDate(today.getDate() + 4);
+
+/* convert date to string and get the first three letters to display the date */
+const todaySubstring = today.toString().substring(0, 3);
+const tomorrowSubstring = tomorrow.toString().substring(0, 3);
+const twoDaysSubstring = twoDays.toString().substring(0, 3);
+const threeDaysSubstring = threeDays.toString().substring(0, 3);
+const fourDaysSubstring = fourDays.toString().substring(0, 3);
+
+console.log(todaySubstring);
+console.log(tomorrowSubstring);
+console.log(twoDaysSubstring);
+console.log(threeDaysSubstring);
+
+forecastTomorrowDate.innerHTML = tomorrowSubstring;
+forecast2DaysDate.innerHTML = twoDaysSubstring;
+forecast3DaysDate.innerHTML = threeDaysSubstring;
+forecast4DaysDate.innerHTML = fourDaysSubstring;
 
 /* 3. Teleport API */
 /* produce an image for the requested city */
@@ -390,6 +389,8 @@ const transitionToMainContainer = function () {
   mainContainer.classList.remove("no-display");
   costOverview.classList.remove("hide");
   introHeading.classList.add("hide");
+  mainAppBackground.classList.remove("mobile-layout");
+  mainAppOverlay.classList.remove("mobile-layout");
 };
 
 /* 7. Handle the form input */

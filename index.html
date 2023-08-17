@@ -13,8 +13,8 @@
     <title>City Checker</title>
   </head>
   <body>
-    <div class="main-app-background">
-      <div class="main-app-overlay">
+    <div class="main-app-background mobile-layout">
+      <div class="main-app-overlay mobile-layout">
         <div class="main-app-container grid no-display">
           <!-- city input  -->
           <div class="city-input-container flex-center">
@@ -47,8 +47,18 @@
           </div>
           <div class="grid costs-overview hide">
             <!-- show temperature  -->
+
             <div class="flex-center temperature-container">
-              <div class="flex-center">
+              <!-- show temperature icon -->
+              <!-- <div class="weather-icon-container">
+                <img
+                  src="https://openweathermap.org/img/wn/10d@2x.png"
+                  class="weather-icon"
+                />
+              </div> -->
+
+              <!-- show temperature in celsius -->
+              <div class="flex-center temperature">
                 <p class="temperature-text temperature-text-styling">22</p>
                 <p class="temperature-celsius">°C</p>
               </div>
@@ -245,7 +255,7 @@
                 </g>
               </svg>
               <p class="inexpensive-restaurant-text costs-text">
-                Inexpensive restaurant
+                Cheap restaurant
               </p>
               <p class="inexpensive-restaurant-costs-number costs-number">22</p>
             </div>
