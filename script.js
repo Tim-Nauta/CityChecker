@@ -234,8 +234,8 @@ const optionsCountries = {
 async function requestCityAndCountry() {
   const response = await fetch(urlCountries, optionsCountries);
 
-  if ((response.status = 429)) {
-    containerErrorMesage.classList.add("hide");
+  if (response.status == 429) {
+    containerErrorMesage.classList.remove("hide");
   }
 
   console.log();
@@ -265,6 +265,11 @@ async function requestCostOfLiving() {
   };
 
   const response = await fetch(url, options);
+
+  if (response.status == 429) {
+    containerErrorMesage.classList.remove("hide");
+  }
+
   const data = await response.json();
   console.log(data);
   console.log(data.prices);
