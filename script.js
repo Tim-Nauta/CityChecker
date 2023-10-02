@@ -235,11 +235,7 @@ async function requestCityAndCountry() {
   const response = await fetch(urlCountries, optionsCountries);
 
   if ((response.status = 429)) {
-    console.log("daily limit reached");
-    containerErrorMesage.classList.remove("hide");
-  }
-
-  if (!response.ok) {
+    containerErrorMesage.classList.add("hide");
   }
 
   console.log();
