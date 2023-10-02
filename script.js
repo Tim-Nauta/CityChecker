@@ -8,6 +8,9 @@ let capitalizedCityInput = "";
 
 /* container classes */
 /* these classes are used to transition to the main container */
+const containerErrorMesage = document.querySelector(
+  ".error-message-modal-background"
+);
 const mainContainer = document.querySelector(".main-app-container");
 const costOverview = document.querySelector(".costs-overview");
 const introHeading = document.querySelector(".intro-heading");
@@ -230,6 +233,18 @@ const optionsCountries = {
 
 async function requestCityAndCountry() {
   const response = await fetch(urlCountries, optionsCountries);
+
+  if ((response.status = 429)) {
+    console.log("daily limit reached");
+    containerErrorMesage.classList.remove("hide");
+  }
+
+  if (!response.ok) {
+  }
+
+  console.log();
+  console.log(response.status);
+
   dataCityAndCountry = await response.json();
   console.log(dataCityAndCountry);
 }

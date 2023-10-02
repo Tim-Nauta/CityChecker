@@ -236,11 +236,52 @@ html {
   background: none;
 }
 
+/* 2. error message */
+
+.error-message-modal {
+  border-radius: 25px;
+  width: 30%;
+  height: 20%;
+  background: linear-gradient(
+    0turn,
+    rgba(138, 130, 130, 1),
+    rgba(202, 198, 198, 1)
+  );
+  /* background: white; */
+}
+
+.error-message-modal-background {
+  z-index: 2;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(0, 0, 0, 0.5);
+}
+
+.error-heading {
+  text-align: center;
+  font-size: 2.5em;
+  padding-bottom: 0.5em;
+}
+
+.error-paragraph {
+  font-size: 1.6em;
+}
+
+.error-text-block {
+  min-width: 70%;
+}
+
 /* laptop */
 @media only screen and (max-width: 1200px) {
   /* resize rem values */
   html {
     font-size: 56%;
+  }
+
+  .error-message-modal {
+    width: 50%;
+    height: 20%;
   }
 }
 
@@ -371,5 +412,10 @@ html {
 
   .city-input-container {
     margin-top: 5rem;
+  }
+
+  .error-message-modal {
+    width: 80%;
+    height: 20%;
   }
 }
