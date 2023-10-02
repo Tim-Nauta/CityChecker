@@ -112,7 +112,7 @@ async function requestWeather() {
 /* 2.1 openWeather Statistical Weather Data API */
 async function requestForecastWeather() {
   /* urls to request the geocoding and open weather statisitcal API. the open weather forecast API requires the response from the geocoding API to function */
-  const openWeatherGeocodingApiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${capitalizedCityInput}&limit=${1}&appid=${openWeatherApiKey}`;
+  const openWeatherGeocodingApiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${capitalizedCityInput}&limit=${1}&appid=${openWeatherApiKey}`;
 
   /* request geocoding data */
   const responseGeocoding = await fetch(openWeatherGeocodingApiUrl);
@@ -122,7 +122,7 @@ async function requestForecastWeather() {
   console.log(dataGeocoding);
 
   /* request open weather forecast data */
-  const openWeatherForecastApiUrl = `http://api.openweathermap.org/data/2.5/forecast?lat=${dataGeocoding[0].lat}&lon=${dataGeocoding[0].lon}&appid=${openWeatherApiKey}`;
+  const openWeatherForecastApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${dataGeocoding[0].lat}&lon=${dataGeocoding[0].lon}&appid=${openWeatherApiKey}`;
 
   const responseForecastWeather = await fetch(openWeatherForecastApiUrl);
 
