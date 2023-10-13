@@ -42,7 +42,7 @@ html {
 
 /* no display */
 .no-display {
-  background: none;
+  background: none !important;
 }
 
 /* 2. main container */
@@ -298,7 +298,7 @@ html {
   }
 }
 
-/*  4.2 responsiveness latop */
+/*  4.1 responsiveness desktop */
 @media only screen and (max-width: 1200px) {
   /* resize rem values */
   html {
@@ -398,7 +398,7 @@ html {
   }
 }
 
-/*  4.3 responsiveness mobile */
+/* mobile*/
 @media only screen and (max-width: 600px) {
   /* resize rem values */
   html {
