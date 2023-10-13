@@ -40,7 +40,12 @@ html {
   transform: translate(-50%, -50%);
 }
 
-/* main container */
+/* no display */
+.no-display {
+  background: none;
+}
+
+/* 2. main container */
 
 .main-app-background {
   width: 100vw;
@@ -78,7 +83,7 @@ html {
   transform: translate(-50%, -50%);
 }
 
-/* city input */
+/* 2.1 city input */
 .city-input-container {
   margin-top: 3rem;
 }
@@ -109,7 +114,7 @@ html {
   background-color: white;
 }
 
-/* show temperature */
+/* 2.2 show temperature */
 
 .temperature-container {
   grid-column-start: 1;
@@ -185,7 +190,7 @@ html {
   color: white;
 }
 
-/* costs overview */
+/* 2.3 costs overview */
 
 .costs-overview {
   padding: 5rem 5rem;
@@ -221,7 +226,7 @@ html {
   color: white;
 }
 
-/* intro container styling */
+/* 2.4 intro container styling */
 .intro-heading {
   font-size: 5rem;
   font-weight: 700;
@@ -230,13 +235,7 @@ html {
   padding-bottom: 3rem;
 }
 
-/* no display */
-
-.no-display {
-  background: none;
-}
-
-/* 2. error message */
+/* 3. error message */
 
 .error-message-modal {
   border-radius: 25px;
@@ -272,8 +271,10 @@ html {
   min-width: 70%;
 }
 
-/*  layout change desktop for max 550px height and max 992px width*/
-@media screen and (orientation: landscape) and (max-height: 550px) and (min-width: 992px) {
+/* 4. responsiveness */
+/*  4.1 responsiveness desktop */
+/* layout change desktop for max 550px height and max 992px width*/
+@media screen and (orientation: landscape) and (max-height: 610px) and (min-width: 1200px) {
   .main-app-container {
     position: static;
     margin: auto;
@@ -286,18 +287,18 @@ html {
   .main-app-background {
     position: absolute;
     width: 100%;
-    height: 550px;
+    height: 610px;
   }
 
   .main-app-overlay {
     position: absolute;
     width: 100%;
-    height: 550px;
+    height: 610px;
     background-color: rgb(0, 0, 0, 0.5);
   }
 }
 
-/* laptop */
+/*  4.2 responsiveness latop */
 @media only screen and (max-width: 1200px) {
   /* resize rem values */
   html {
@@ -362,6 +363,17 @@ html {
   }
 }
 
+/*  layout change tablet for smooth transition*/
+@media screen and (orientation: landscape) and (max-height: 550px) and (min-width: 992px) and (max-width: 1200px) {
+  .main-app-background {
+    height: 550px;
+  }
+
+  .main-app-overlay {
+    height: 550px;
+  }
+}
+
 /* layout change tablet landscape for max height 800px and min 600px width*/
 @media screen and (orientation: landscape) and (max-height: 800px) and (max-width: 992px) and (min-width: 660px) {
   .main-app-container {
@@ -386,7 +398,7 @@ html {
   }
 }
 
-/* mobile*/
+/*  4.3 responsiveness mobile */
 @media only screen and (max-width: 600px) {
   /* resize rem values */
   html {
@@ -470,25 +482,12 @@ html {
 }
 
 /* layout change mobile landscape for max height 800px and min 600px width*/
-@media screen and (orientation: landscape) and (max-height: 800px) and (max-width: 768px) and (min-width: 660px) {
-  .main-app-container {
-    position: static;
-    margin: auto;
-    top: 0;
-    left: 0;
-    transform: none;
-    margin: 2em auto;
-  }
-
+@media screen and (max-height: 710px) and (max-width: 768px) and (min-width: 600px) {
   .main-app-background {
-    position: absolute;
-    width: 100%;
-    height: 710px;
+    height: 720px;
   }
 
   .main-app-overlay {
-    position: absolute;
-    width: 100%;
-    height: 710px;
+    height: 720px;
   }
 }
