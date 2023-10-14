@@ -4,6 +4,8 @@
 /* submit city form*/
 const cityInput = document.getElementById("city-input");
 const citySubmit = document.querySelector(".city-submit");
+const cityInputContainer = document.querySelector(".city-input-container");
+const invalidInputMessage = document.querySelector(".invalid-input-message");
 let capitalizedCityInput = "";
 
 /* container classes */
@@ -409,7 +411,27 @@ const transitionToMainContainer = function () {
   mainAppOverlay.classList.remove("mobile-layout");
 };
 
-/* 7. Handle the form input */
+/* 7. check for valid form input*/
+
+/* error message for no valid input */
+function checkValidInput() {
+  if (cityArrayResult === undefined) {
+    cityInputContainer.classList.add("invalid-input");
+    console.log("no valid input");
+    invalidInputMessage.classList.remove("hide");
+  }
+  if (cityArrayResult !== undefined) {
+    cityInputContainer.classList.remove("invalid-input");
+    console.log("valid input");
+    invalidInputMessage.classList.add("hide");
+  }
+
+  console.log(cityArrayResult);
+}
+
+checkValidInput();
+
+/* 8. Handle the form input */
 /* submit the city name that was filled in by the user */
 citySubmit.addEventListener("click", function (event) {
   /* disable form auto submit */
@@ -431,9 +453,12 @@ citySubmit.addEventListener("click", function (event) {
   /* join all the elements of the array back together into a string */
   capitalizedCityInput = cityInputArray.join(" ");
 
-  /* search for the array that corresponds with the submitted city. this array needs to be found so the country that belongs to the submitted city can be stored and used to call the cost of living and prices api */
+  /* search for the array that corresponds with the submitted city by the user. this array needs to be found so the country that belongs to the user submitted city can be stored and used to call the cost of living and prices api */
+
   cityArrayResult = dataCityAndCountry.cities.find(findCityArray);
-  console.log(cityArrayResult);
+
+  /* check if the user typed a valid city into the input field*/
+  checkValidInput();
 
   submittedCountry = cityArrayResult.country_name;
 
