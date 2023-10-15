@@ -26,6 +26,10 @@ html {
   display: none;
 }
 
+.relative-position {
+  position: relative;
+}
+
 .flex-center {
   display: flex;
   justify-content: center;
@@ -46,7 +50,6 @@ html {
 }
 
 /* 2. main container */
-
 .main-app-background {
   width: 100vw;
   height: 100vh;
@@ -163,7 +166,7 @@ html {
   color: white;
 }
 
-/* show weather forecast */
+/* 2.2.1 show weather forecast */
 .forecast-container {
   grid-column-start: 1;
   grid-column-end: 2;
@@ -237,6 +240,68 @@ html {
   font-size: 2.5rem;
   font-weight: 600;
   color: white;
+}
+
+/* 2.3.1 extra information button styling */
+
+.information-button {
+  height: 2.5em;
+  width: 2.5em;
+  stroke: white;
+  margin-left: 0.5em;
+}
+
+.information-button:hover {
+  stroke: rgb(202, 200, 200);
+}
+
+.information-button:hover + .information-container {
+  display: block;
+}
+
+.information-container {
+  position: absolute;
+  min-height: 10em;
+  width: 30em;
+  background-color: rgb(202, 200, 200);
+  z-index: 99;
+  opacity: 0.96;
+  margin-top: -14em;
+  border-radius: 25px;
+  transform: translate(-50%, 0%);
+}
+
+.information-container-fastfood,
+.information-container-three-course,
+.information-container-renting {
+  margin-top: -15.5em;
+}
+
+.information-container-basic-utilities {
+  margin-top: -17.5em;
+}
+
+.information-container:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 40px solid transparent;
+  border-top-color: rgb(202, 200, 200);
+  border-bottom: 0px;
+  border-right: 0;
+  margin-left: -0.5em;
+  margin-bottom: -1.5em;
+  transform: translate(-50%, 0%);
+}
+
+.information-container-text {
+  color: black;
+  font-weight: 600;
+  font-size: 1.6em;
+  margin: 1.5em;
 }
 
 /* 2.4 intro container styling */
@@ -437,7 +502,7 @@ html {
   .costs-overview {
     padding: 5rem 5rem;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: 3rem;
   }
 
   .main-app-container {
@@ -491,6 +556,18 @@ html {
   .error-message-modal {
     width: 80%;
     height: 20%;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  /* extra information button styling mobile */
+  .information-button-overlay {
+    position: absolute;
+    right: -5%;
+  }
+
+  .costs-text {
+    max-width: 6em;
   }
 }
 
