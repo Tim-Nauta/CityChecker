@@ -330,21 +330,21 @@ async function requestCostOfLiving() {
 
   /* 4.3.2.2 prices for 1km taxi */
   /* convert USD to EUR prices*/
-  const priceEurTaxi = usdToEurExchangeRate * data.prices[49].usd.avg;
+  const priceEurTaxi = usdToEurExchangeRate * data.prices[44].usd.avg;
 
   /* round amount to 2 decimals */
   taxiPrices.innerHTML = `€ ${priceEurTaxi.toFixed(2)}`;
-  console.log(`the average price for 1km taxi is ${data.prices[49].usd.avg}`);
+  console.log(`the average price for 1km taxi is ${data.prices[44].usd.avg}`);
 
   /* 4.3.2.3 prices for 1 liter gasoline */
   /* convert USD to EUR prices*/
-  const priceEurGasoline = usdToEurExchangeRate * data.prices[44].usd.avg;
+  const priceEurGasoline = usdToEurExchangeRate * data.prices[40].usd.avg;
 
   /* round amount to 2 decimals */
   gasolinePrices.innerHTML = `€ ${priceEurGasoline.toFixed(2)}`;
 
   console.log(
-    `the average price for 1 liter gasoline is ${data.prices[44].usd.avg}`
+    `the average price for 1 liter gasoline is ${data.prices[40].usd.avg}`
   );
 
   /* 4.3.3 living expenses */
