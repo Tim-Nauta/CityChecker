@@ -94,26 +94,6 @@ async function requestWeather() {
   showTemperature.innerHTML = convertTemperature(data.main.temp);
 }
 
-// /* 2.1 openWeather Statistical Weather Data API */
-// async function requestStatisticalWeather2() {
-//   /* change the url by adding the open weather api key */
-//   const openWeatherStatisticalApiUrl = `history.openweathermap.org/data/2.5/aggregated/year?lat=${geolocationLat}&lon=${geolocationLon}&appid=${openWeatherApiKey}`;
-//   const response = await fetch(openWeatherStatisticalApiUrl);
-
-//   /* store the data as a json file */
-//   const data = await response.json();
-//   console.log(data);
-
-//   /* change the displayed city name*/
-//   // showCity.innerHTML = data.name;
-
-//   /* convert temperature and round the number */
-//   const temperature = convertTemperature(data.main.temp);
-
-//   /* change the displayed temperature*/
-//   // showTemperature.innerHTML = temperature;
-// }
-
 /* 2.1 openWeather Statistical Weather Data API */
 async function requestForecastWeather() {
   /* urls to request the geocoding and open weather statisitcal API. the open weather forecast API requires the response from the geocoding API to function */
@@ -207,21 +187,6 @@ async function requestCityImage() {
 
 /* 4. cost of living */
 
-// const url = "https://cost-of-living-and-prices.p.rapidapi.com/cities";
-// const options = {
-//   method: "GET",
-//   headers: {
-//     "X-RapidAPI-Key": "1e57bfef2amsh9231ede2da10ba7p180c79jsn8010f9c78bef",
-//     "X-RapidAPI-Host": "cost-of-living-and-prices.p.rapidapi.com",
-//   },
-// };
-
-// async function requestCostOfLiving() {
-//   const response = await fetch(url, options);
-//   const result = await response.text();
-//   console.log(result);
-// }
-
 // requestCostOfLiving();
 /* 4.1 request country and city list to search for the corresponding country based on the submitted city */
 const urlCountries = "https://cost-of-living-and-prices.p.rapidapi.com/cities";
@@ -240,7 +205,6 @@ async function requestCityAndCountry() {
     containerErrorMesage.classList.remove("hide");
   }
 
-  console.log();
   console.log(response.status);
 
   dataCityAndCountry = await response.json();
@@ -385,18 +349,37 @@ async function requestCostOfLiving() {
 /* 5. Currency conversion API */
 
 async function requestConvertCurrency() {
+  // const url =
+  //   "https://currency-exchange.p.rapidapi.com/exchange?from=USD&to=EUR&q=1.0";
+  // const options = {
+  //   method: "GET",
+  //   headers: {
+  //     "X-RapidAPI-Key": "1e57bfef2amsh9231ede2da10ba7p180c79jsn8010f9c78bef",
+  //     "X-RapidAPI-Host": "currency-exchange.p.rapidapi.com",
+  //   },
+  // };
+
   const url =
-    "https://currency-exchange.p.rapidapi.com/exchange?from=USD&to=EUR&q=1.0";
+    "https://currency-conversion-and-exchange-rates.p.rapidapi.com/latest?from=USD&to=EUR%2CGBP";
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "1e57bfef2amsh9231ede2da10ba7p180c79jsn8010f9c78bef",
-      "X-RapidAPI-Host": "currency-exchange.p.rapidapi.com",
+      "x-rapidapi-key": "1e57bfef2amsh9231ede2da10ba7p180c79jsn8010f9c78bef",
+      "x-rapidapi-host":
+        "currency-conversion-and-exchange-rates.p.rapidapi.com",
     },
   };
 
-  const response = await fetch(url, options);
-  usdToEurExchangeRate = await response.json();
+  try {
+    const response = await fetch(url, options);
+    currencyExchangeRates = await response.json();
+    euroToUSDExchangeRate = currencyExchangeRates.rates.USD;
+
+    /* convert from Euro to USD to USD to Euro */
+    usdToEurExchangeRate = 1 / euroToUSDExchangeRate;
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 requestConvertCurrency();
@@ -417,12 +400,10 @@ const transitionToMainContainer = function () {
 function checkValidInput() {
   if (cityArrayResult === undefined) {
     cityInputContainer.classList.add("invalid-input");
-    console.log("no valid input");
     invalidInputMessage.classList.remove("hide");
   }
   if (cityArrayResult !== undefined) {
     cityInputContainer.classList.remove("invalid-input");
-    console.log("valid input");
     invalidInputMessage.classList.add("hide");
   }
 
@@ -474,17 +455,3 @@ citySubmit.addEventListener("click", function (event) {
   requestCostOfLiving();
   console.log(submittedCountry);
 });
-
-/* plan of action */
-/* information tables to include in the app */
-/* 
-1. weather forecast for coming week
-
-optional
-5. cost to get there (plane, car, train)
-*/
-
-/* inexpensive restuaraunt 
-three course dinner */
-
-/* living expenses: apartment, renting utilities */
