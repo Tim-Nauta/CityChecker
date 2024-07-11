@@ -85,7 +85,6 @@ async function requestWeather() {
 
   /* store the data as a json file */
   const data = await response.json();
-  console.log(data);
 
   /* change the displayed city name*/
   showCity.innerHTML = data.name;
@@ -104,7 +103,6 @@ async function requestForecastWeather() {
 
   /* store the geocoding data as a json file */
   const dataGeocoding = await responseGeocoding.json();
-  console.log(dataGeocoding);
 
   /* request open weather forecast data */
   const openWeatherForecastApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${dataGeocoding[0].lat}&lon=${dataGeocoding[0].lon}&appid=${openWeatherApiKey}`;
@@ -113,7 +111,6 @@ async function requestForecastWeather() {
 
   /* store the forecast data as a json file */
   const dataForecastWeather = await responseForecastWeather.json();
-  console.log(dataForecastWeather);
 
   /* convert the temperature from Kelvin to Celsius and then display the forecast data in the weather forecast container */
   forecastTomorrow.innerHTML = convertTemperature(
@@ -149,11 +146,6 @@ const twoDaysSubstring = twoDays.toString().substring(0, 3);
 const threeDaysSubstring = threeDays.toString().substring(0, 3);
 const fourDaysSubstring = fourDays.toString().substring(0, 3);
 
-console.log(todaySubstring);
-console.log(tomorrowSubstring);
-console.log(twoDaysSubstring);
-console.log(threeDaysSubstring);
-
 forecastTomorrowDate.innerHTML = tomorrowSubstring;
 forecast2DaysDate.innerHTML = twoDaysSubstring;
 forecast3DaysDate.innerHTML = threeDaysSubstring;
@@ -171,9 +163,7 @@ async function requestCityImage() {
 
   /* store the data as a json file */
   const data = await response.json();
-  console.log(data);
 
-  console.log(data.photos[0].image.web);
   /* change the background */
   /* store the web image */
   const imageWeb = data.photos[0].image.web;
@@ -205,10 +195,7 @@ async function requestCityAndCountry() {
     containerErrorMesage.classList.remove("hide");
   }
 
-  console.log(response.status);
-
   dataCityAndCountry = await response.json();
-  console.log(dataCityAndCountry);
 }
 
 requestCityAndCountry();
@@ -237,8 +224,6 @@ async function requestCostOfLiving() {
   }
 
   const data = await response.json();
-  console.log(data);
-  console.log(data.prices);
 
   /* 4.3 display requested data */
   /* 4.3.1 food */
@@ -249,9 +234,6 @@ async function requestCostOfLiving() {
   /* round amount to 2 decimals */
   fastfoodPrices.innerHTML = `€ ${priceEurFastfood.toFixed(2)}`;
 
-  console.log(
-    `the average price for a fastfood meal is ${data.prices[33].usd.avg}`
-  );
   /* 4.3.1.2 prices for mid-range restaurant */
   /* convert USD to EUR prices*/
   const priceEurMidRangeRestaurant =
@@ -262,9 +244,6 @@ async function requestCostOfLiving() {
     2
   )}`;
 
-  console.log(
-    `the average price for a mid-range restaurant is ${data.prices[34].usd.avg}`
-  );
   /* 4.3.1.3 prices for cheap restaurant */
   /* convert USD to EUR prices*/
   const priceEurInexpensiveRestaurant =
@@ -275,10 +254,6 @@ async function requestCostOfLiving() {
     2
   )}`;
 
-  console.log(
-    `the average price for an inexpensive restaurant is ${data.prices[35].usd.avg}`
-  );
-
   /* 4.3.2 transport */
   /* 4.3.2.1 prices for public transport */
   /* convert USD to EUR prices*/
@@ -288,17 +263,12 @@ async function requestCostOfLiving() {
   /* round amount to 2 decimals */
   publicTransportPrices.innerHTML = `€ ${priceEurPublicTransport.toFixed(2)}`;
 
-  console.log(
-    `the average price for a one-way local transport ticket is ${data.prices[42].usd.avg}`
-  );
-
   /* 4.3.2.2 prices for 1km taxi */
   /* convert USD to EUR prices*/
   const priceEurTaxi = usdToEurExchangeRate * data.prices[44].usd.avg;
 
   /* round amount to 2 decimals */
   taxiPrices.innerHTML = `€ ${priceEurTaxi.toFixed(2)}`;
-  console.log(`the average price for 1km taxi is ${data.prices[44].usd.avg}`);
 
   /* 4.3.2.3 prices for 1 liter gasoline */
   /* convert USD to EUR prices*/
@@ -306,10 +276,6 @@ async function requestCostOfLiving() {
 
   /* round amount to 2 decimals */
   gasolinePrices.innerHTML = `€ ${priceEurGasoline.toFixed(2)}`;
-
-  console.log(
-    `the average price for 1 liter gasoline is ${data.prices[40].usd.avg}`
-  );
 
   /* 4.3.3 living expenses */
   /* 4.3.3.1 prices for renting */
@@ -319,10 +285,6 @@ async function requestCostOfLiving() {
   /* round amount to 2 decimals */
   rentingPrices.innerHTML = `€ ${priceEurRenting.toFixed(2)}`;
 
-  console.log(
-    `the average price for renting an apartment is ${data.prices[26].usd.avg}`
-  );
-
   /* 4.3.3.2 prices for apartment */
   /* convert USD to EUR prices*/
   const priceEurApartment = usdToEurExchangeRate * data.prices[1].usd.avg;
@@ -330,35 +292,17 @@ async function requestCostOfLiving() {
   /* round amount to 2 decimals */
   apartmentPrices.innerHTML = `€ ${priceEurApartment.toFixed(2)}`;
 
-  console.log(
-    `the average price for an apartment per m2 is ${data.prices[1].usd.avg}`
-  );
-
   /* 4.3.3.3 prices for utilities */
   /* convert USD to EUR prices*/
   const priceEurUtilities = usdToEurExchangeRate * data.prices[48].avg;
 
   /* round amount to 2 decimals */
   utilitiesPrices.innerHTML = `€ ${priceEurUtilities.toFixed(2)}`;
-
-  console.log(
-    `the average price for basic utilities is ${data.prices[48].avg}`
-  );
 }
 
 /* 5. Currency conversion API */
 
 async function requestConvertCurrency() {
-  // const url =
-  //   "https://currency-exchange.p.rapidapi.com/exchange?from=USD&to=EUR&q=1.0";
-  // const options = {
-  //   method: "GET",
-  //   headers: {
-  //     "X-RapidAPI-Key": "1e57bfef2amsh9231ede2da10ba7p180c79jsn8010f9c78bef",
-  //     "X-RapidAPI-Host": "currency-exchange.p.rapidapi.com",
-  //   },
-  // };
-
   const url =
     "https://currency-conversion-and-exchange-rates.p.rapidapi.com/latest?from=USD&to=EUR%2CGBP";
   const options = {
@@ -370,16 +314,12 @@ async function requestConvertCurrency() {
     },
   };
 
-  try {
-    const response = await fetch(url, options);
-    currencyExchangeRates = await response.json();
-    euroToUSDExchangeRate = currencyExchangeRates.rates.USD;
+  const response = await fetch(url, options);
+  currencyExchangeRates = await response.json();
+  euroToUSDExchangeRate = currencyExchangeRates.rates.USD;
 
-    /* convert from Euro to USD to USD to Euro */
-    usdToEurExchangeRate = 1 / euroToUSDExchangeRate;
-  } catch (error) {
-    console.error(error);
-  }
+  /* convert from Euro to USD to USD to Euro */
+  usdToEurExchangeRate = 1 / euroToUSDExchangeRate;
 }
 
 requestConvertCurrency();
@@ -406,8 +346,6 @@ function checkValidInput() {
     cityInputContainer.classList.remove("invalid-input");
     invalidInputMessage.classList.add("hide");
   }
-
-  console.log(cityArrayResult);
 }
 
 checkValidInput();
@@ -453,5 +391,4 @@ citySubmit.addEventListener("click", function (event) {
 
   /* call the function that handles the cost of living and prices API*/
   requestCostOfLiving();
-  console.log(submittedCountry);
 });
